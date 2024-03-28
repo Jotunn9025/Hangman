@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+
 words = {"Avatar", "The Dark Knight", "Inception", "Interstellar", "The Avengers", "Titanic", "Black Panther", "La La Land",
          "The Wolf of Wall Street", "Gravity", "The Lord of the Rings The Return of the King", "The Shape of Water",
          "Mad Max Fury Road", "The Revenant", "Joker", "The Social Network", "Frozen", "The Grand Budapest Hotel", "Django Unchained",
@@ -40,36 +41,61 @@ words = {"Avatar", "The Dark Knight", "Inception", "Interstellar", "The Avengers
          "The Shining", "A Clockwork Orange", "2001 A Space Odyssey", "Inception", "The Grand Budapest Hotel", "The Shape of Water",
          "Pans Labyrinth", "Life is Beautiful", "City of God", "Spirited Away", "Amelie", "Crouching Tiger, Hidden Dragon", "Oldboy",
          "The Intouchables", "The Lives of Others", "The Pianist", "The Social Network", "Whiplash"}
-unique_words=set(words)
+unique_words = set(words)
+
+
 def process_word():
-    random_word = random.choice(list(unique_words))
-    print (random_word)
-    split_word = list(random_word)
-    processed_word = []
-    for letter in split_word:
+    global original_word, processed_chars
+    original_word = random.choice(list(unique_words)).lower()
+    print(original_word)
+    processed_chars = []
+    for letter in original_word:
         if letter.lower() in {'a', 'e', 'i', 'o', 'u'}:
-            processed_word.append('X')
+            processed_chars.append('X')
         elif letter.isdigit():
-            processed_word.append('.')
+            processed_chars.append('.')
         elif letter == ' ':
-            processed_word.append('/')
+            processed_chars.append('/')
         else:
-            processed_word.append('_')
-    num_words = random_word.count(' ') + 1
-    display_processed_word(processed_word)
-    num_words_label.config(text=f"Number of words: {num_words}")
-def display_processed_word(processed_word):
+            processed_chars.append('_')
+
+    display_processed_word()
+
+
+def display_processed_word():
     for label in processed_word_labels:
         label.destroy()
-    for letter in processed_word:
-        label = tk.Label(window, text=letter, font=("Courier", 16), padx=5, pady=5)
+    for char in processed_chars:
+        label = tk.Label(window, text=char, font=("Courier", 16), padx=5, pady=5)
         label.pack(side="left", padx=(2, 2))
         processed_word_labels.append(label)
+
+
+def update_word():
+    global processed_chars
+
+    char = entry.get().strip()
+    entry.delete(0, tk.END)
+
+    for i, original_char in enumerate(original_word):
+        if char.lower() == original_char.lower():
+            processed_chars[i] = original_char
+
+    display_processed_word()
+
+
 window = tk.Tk()
-window.title("Processed Word")
+window.title("Hangman")
+
 processed_word_labels = []
 num_words_label = tk.Label(window, font=("Arial", 12))
 num_words_label.pack(pady=5)
+
 process_button = tk.Button(window, text="Process New Word", command=process_word)
 process_button.pack(pady=10)
+
+entry = tk.Entry(window)
+entry.pack(pady=10)
+entry.bind('<Return>', lambda event=None: update_word())
+
 window.mainloop()
