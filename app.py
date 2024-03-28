@@ -125,6 +125,8 @@ window.title("Hangman Game")
 processed_word_labels = []
 failed_attempts_label = tk.Label(window, font=("Arial", 12))
 failed_attempts_label.pack(anchor="ne", padx=10, pady=5)
+static_text_label = tk.Label(window, text="_:Consonent\nX:Vowel\n.:number   ", font=("Arial", 10))
+static_text_label.pack(anchor="ne", padx=10, pady=5)
 
 img_label = tk.Label(window)
 img_label.pack()
@@ -136,7 +138,7 @@ entry = tk.Entry(window, font=("Arial", 12))
 entry.bind('<Return>', update_word)
 entry.pack(pady=5)
 
-update_image()  # Load initial image
-process_word()  # Start a new game
+update_image()  
+process_word() 
 
 window.mainloop()
