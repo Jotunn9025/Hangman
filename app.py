@@ -43,7 +43,7 @@ words = {"Avatar", "The Dark Knight", "Inception", "Interstellar", "The Avengers
          "The Shining", "A Clockwork Orange", "2001 A Space Odyssey", "Inception", "The Grand Budapest Hotel", "The Shape of Water",
          "Pans Labyrinth", "Life is Beautiful", "City of God", "Spirited Away", "Amelie", "Crouching Tiger, Hidden Dragon", "Oldboy",
          "The Intouchables", "The Lives of Others", "The Pianist", "The Social Network", "Whiplash"}
-unique_words = set(words)
+
 original_word = ''
 processed_chars = []
 failed_attempts = 0
@@ -51,7 +51,7 @@ failed_attempts = 0
 def process_word():
     global original_word, processed_chars, failed_attempts
 
-    original_word = random.choice(list(unique_words)).lower()  # Convert to lowercase
+    original_word = random.choice(list(words)).lower()  # Convert to lowercase
     print(original_word)
     processed_chars = []
     failed_attempts = 0
